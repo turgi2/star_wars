@@ -1,0 +1,160 @@
+#General task
+
+#What is kafka? How it works? Which are the main advantages/benefits of using
+kafka?
+Apache Kafka is a streaming platform which combaines three key capabilities (publish, subscribe to, store and process) for stream of events. 
+Kafka is often used in real-time streaming data architectures to provide real-time analytics. 
+Kafka is a fast, scalable, durable, and fault-tolerant publish-subscribe messaging system.
+
+
+# Write down testing strategy for an application that uses kafka, describe how the
+testing will be organized and provide 1 test case as an example.
+  * Request/response — a service sends a request message to a recipient and expects to receive a reply message promptly.
+  * Notifications — a sender sends a message to a recipient but does not expect a reply. Nor is one sent.
+  * Request/asynchronous response — a service sends a request message to a recipient and expects to receive a reply message eventually.
+  * Publish/subscribe — a service publishes a message to zero or more recipients.
+  * Publish/asynchronous response — a service publishes a request to one or recipients, some of whom send back a reply.
+
+# What is microservice architecture? Please write down your approach for testing:
+  Microservice architecture - is an architectural style that structures an application as a collection of services that are
+   * Highly maintainable and testable
+   * Independently deployable
+   * Organized around business capabilities
+   * Owned by a small team
+  
+  Testing microservices can be done through the Kakfka API's (Admin, Producer, Consumer and Kafka streams and connect) the scenarios should be testing of the synchronous and asynchronous communication messaging.
+  Since microservices communicate more over the wire, we need to test the impact of network connections more thoroughly. 
+ 
+ 
+
+
+
+# What will be your approach to ensure that tests can be re-run in future?:
+  * Ability to work for different ads types (e.g.impression, click).
+  * Must be able to handle tens of thousands of events per second.
+  * Ability to fan out updates to more than 1,000 consumer machines.
+  * End to end delay should be less than 10 seconds;
+  * Ensure 100 percent uptime.
+  * Lightweight and maintainable for engineers.
+
+
+
+
+
+
+#Working with GraphQL API
+
+#STAR_WARS_A_NEW_HOPE_TASK_DETAILS
+
+#1. I've get the ID of the first Star wars move A_new_hope with a query  in order to have access to main characters in this part with the following query:
+
+{
+  "data": {
+    "allFilms": {
+      "films": [
+        {
+          "title": "A New Hope",
+          "id": "ZmlsbXM6MQ=="
+        },
+        {
+          "title": "The Empire Strikes Back",
+          "id": "ZmlsbXM6Mg=="
+        },
+        {
+          "title": "Return of the Jedi",
+          "id": "ZmlsbXM6Mw=="
+        },
+        {
+          "title": "The Phantom Menace",
+          "id": "ZmlsbXM6NA=="
+        },
+        {
+          "title": "Attack of the Clones",
+          "id": "ZmlsbXM6NQ=="
+        },
+        {
+          "title": "Revenge of the Sith",
+          "id": "ZmlsbXM6Ng=="
+        }
+      ]
+    }
+  }
+}
+
+#2. Then I've used the film ID in order to retrieve all characters which participate in the this movie:
+query allfilms {
+film(id: "ZmlsbXM6MQ==") 
+{
+    characterConnection{
+      edges{
+        cursor
+        node{
+          name
+        }
+      }
+      totalCount
+      characters{
+        name
+        edited
+      }
+    }
+    title
+    director
+    episodeID
+    speciesConnection {
+      totalCount
+      species{
+        name
+        id
+      }
+      
+  }
+  #3. In the below query I've made a speciesConnection after the first character with respective ID:
+    page: speciesConnection(first: 1, after: "YXJyYXljb25uZWN0aW9uOjA="){
+       pageInfo{
+        startCursor
+         endCursor
+       }
+      species{
+        name
+        id
+        personConnection{
+            people{
+            name
+            birthYear
+            eyeColor
+            homeworld{
+              name
+            }
+          }
+        }
+      }
+    }
+}
+#4. The droid result which participated in the movie a_new_hope:
+  droids: species(id: "c3BlY2llczoy") {
+        personConnection{
+        people{
+        id
+             name
+             birthYear
+             eyeColor
+             homeworld{
+               name
+           }
+         }
+       }
+     }
+     
+#5. All people characters participated in the movies:
+allPeople{
+    totalCount
+    people{
+      id
+      name
+      gender
+    }
+  }
+}
+
+#NOTE: I didn't finished the final part of the task as I didn't quite understand it. It can be discussed in the final interview (if any).
